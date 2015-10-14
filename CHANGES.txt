@@ -1,5 +1,5 @@
-2.6 (unreleased)
-================
+2.5+class.extensibility (2015-10-14)
+====================================
 
 - Allow configurable environment classes and template renderer
 
