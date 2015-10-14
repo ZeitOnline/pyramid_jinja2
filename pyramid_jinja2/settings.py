@@ -157,6 +157,16 @@ def parse_env_options_from_settings(settings,
     if finalize is not None:
         opts['finalize'] = maybe_dotted(finalize)
 
+    # get custom jinja2 environment class
+    environment = sget('environment')
+    if environment is not None:
+        opts['environment'] = maybe_dotted(environment)
+
+    # get custom jinja2 renderer class
+    renderer = sget('renderer')
+    if renderer is not None:
+        opts['renderer'] = maybe_dotted(renderer)
+
     # add custom jinja2 filters
     opts['filters'] = parse_named_assetspecs(sget('filters', ''), maybe_dotted)
 

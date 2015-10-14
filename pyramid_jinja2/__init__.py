@@ -281,8 +281,7 @@ class Jinja2RendererFactory(object):
                     pass
 
             return self.environment.get_template(name)
-
-        return Jinja2TemplateRenderer(template_loader)
+        return self.environment.renderer(template_loader)
 
 
 def renderer_factory(info):
@@ -386,14 +385,18 @@ def create_environment_from_options(env_opts, loader_opts):
     filters = env_opts.pop('filters', {})
     tests = env_opts.pop('tests', {})
     globals = env_opts.pop('globals', {})
+    environment = env_opts.pop('environment', Environment)
+    renderer = env_opts.pop('renderer', Jinja2TemplateRenderer)
 
-    env = Environment(
+    env = environment(
         loader=loader,
         **env_opts
     )
 
     env.install_gettext_callables(
         gettext.gettext, gettext.ngettext, newstyle=newstyle)
+
+    env.renderer = renderer
 
     env.filters.update(filters)
     env.tests.update(tests)
